@@ -1,9 +1,10 @@
+
 package com.altran.reservation;
 
 import javax.persistence.*;
 import java.util.List;
 
-public class Reservation {
+public class ReservationNotification {
     private int rid;
     private String emailId;
     private int checkInTime;

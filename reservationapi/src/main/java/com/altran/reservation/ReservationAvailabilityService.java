@@ -1,5 +1,6 @@
 package com.altran.reservation;
 
+import com.altran.reservation.thrift.impl.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class ReservationService {
+public class ReservationAvailabilityService {
     @Autowired
     private CityRepository cityRepository;
     @Autowired
@@ -48,6 +49,3 @@ public class ReservationService {
         return slotRepository.availableSlots(cityHashMap.get(reservation.getCity()));
     }
     }
-
-
-

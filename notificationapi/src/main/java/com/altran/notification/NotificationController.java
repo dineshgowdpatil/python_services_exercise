@@ -1,5 +1,6 @@
 package com.altran.notification;
 
+import com.altran.notification.thrift.impl.ReservationNotification;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,13 +32,12 @@ public class NotificationController {
     }
 
 
-    @SqsListener(value = "http://localstack:4566/000000000000/notification", deletionPolicy = SqsMessageDeletionPolicy.ALWAYS)
-    public void listenToSecondQueue(Reservation message) {
+    public boolean sendEmail(ReservationNotification message) {
 
         try {
             ObjectMapper objectMapper=new ObjectMapper();
             String messageAsString = objectMapper.writeValueAsString(message);
-            System.out.println("@@@@@@@@@@ Received a message on notification queue: {}"+ messageAsString+" @@@@@@@@@@");
+            System.out.println("@@@@@@@@@@ Received a message on notification : {}"+ messageAsString+" @@@@@@@@@@");
             Destination destination = new Destination();
 
             destination.setToAddresses(Collections.singletonList(message.getEmailId()));
@@ -53,9 +53,10 @@ public class NotificationController {
             SendTemplatedEmailResult sendTemplatedEmailResult= amazonSimpleEmailService.sendTemplatedEmail(templatedEmailRequest);
 
             System.out.println("@@@@@@@@@@Email Sent and ID="+sendTemplatedEmailResult.getMessageId()+" @@@@@@@@@@");
-
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
 
         }
 

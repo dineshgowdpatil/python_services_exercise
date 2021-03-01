@@ -1,3 +1,4 @@
+/*
 package com.altran.reservation;
 
 import com.amazonaws.services.sqs.AmazonSQSAsync;
@@ -39,4 +40,8 @@ public class ReservationController {
     public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException exception) {
         return ResponseEntity.badRequest().body("{\"message\":\"Invalid Input\"}");
     }
+
 }
+
+
+*/
